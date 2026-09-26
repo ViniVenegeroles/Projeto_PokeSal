@@ -88,4 +88,17 @@ public class BatalhaTest {
         assertEquals(90, usuario.getPrecisao());
         assertEquals(35, usuario.getDef());
     }
+    @Test
+    @SuppressWarnings("java:S3011")
+    public void testMudarTerrenoSalShard() throws NoSuchFieldException, IllegalAccessException {
+        Batalha arena = new Batalha();
+        arena.mudarTerreno();
+
+        java.lang.reflect.Field campoClima = Batalha.class.getDeclaredField("climaAtual");
+        campoClima.setAccessible(true);
+        String climaAposSalShard = (String) campoClima.get(arena);
+
+        assertNotEquals("Asfalto Quente", climaAposSalShard, "O Sal Shard deve obrigatoriamente trocar o clima inicial para um diferente.");
+        assertTrue(climaAposSalShard.equals("Piso Escorregadio") || climaAposSalShard.equals("Canteiro Central"), "O novo clima sorteado deve ser um dos outros dois disponiveis.");
+    }
 }
