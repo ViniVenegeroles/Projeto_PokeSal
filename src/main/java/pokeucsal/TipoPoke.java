@@ -1,35 +1,26 @@
 package pokeucsal;
 
-/**
- * Contrato que todo tipo elemental (Fogo, Água e Planta) precisa cumprir.
- */
+/** Tipo elemental de um Pokésal (Fogo, Água ou Planta). */
 public interface TipoPoke {
-    /**
-     * Devolve o nome do tipo.
-     *
-     * @return nome do tipo, por exemplo "Fogo"
-     */
+    /** Devolve o nome do tipo. */
     String getNomeTipo();
-
     /**
-     * Calcula o multiplicador de dano deste tipo contra o tipo do defensor.
+     * Calcula o multiplicador de dano contra outro tipo.
      *
-     * @param defensor tipo de quem vai receber o golpe
-     * @return 2.0 (vantagem), 0.5 (desvantagem) ou 1.0 (neutro)
+     * @param defensor tipo de quem recebe o golpe
+     * @return 2.0 com vantagem, 0.5 com desvantagem, 1.0 nos demais casos
      */
     double calcMult(TipoPoke defensor);
-
     /**
-     * Aplica o efeito do golpe de Buff no próprio usuário.
+     * Aplica o buff do tipo em quem usou o golpe de suporte.
      *
-     * @param usuario Pokémon que usou o Buff
+     * @param usuario Pokésal que usou o golpe
      */
-    void apBf(Pokemon usuario);
-
+    void apBf(Pokesal usuario);
     /**
-     * Aplica o efeito do golpe de Debuff no adversário.
+     * Aplica o debuff do tipo no alvo do golpe.
      *
-     * @param usuario Pokémon que vai sofrer o Debuff
+     * @param alvo Pokésal que recebe o enfraquecimento
      */
-    void apDb(Pokemon usuario);
+    void apDb(Pokesal alvo);
 }

@@ -13,10 +13,10 @@ public class Bag {
     private int itensUsd = 0;
     public void resetarUsoBatalha() {
         this.itensUsd = 0;
-        this.potion = 1;
-        this.superPotion = 1;
-        this.antidoto = 1;
-        this.salShard = 1;
+        potion = 1;
+        superPotion = 1;
+        antidoto = 1;
+        salShard = 1;
     }
     public void usarItem() {
         if (this.itensUsd >= LIMITE_ITENS) {
@@ -44,56 +44,47 @@ public class Bag {
         final int escolha = sc.nextInt();
         switch (escolha) {
             case 1:
-                if (potion > 0) {
+                if(potion > 0) {
                     potion--;
                     aliado.curar(CURA_POTION);
                     System.out.println("\n>>> " + aliado.getNome() + " Usou uma Potion e Recuperou 15% da vida!");
                     Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                 } else {
-                    System.out.println("Item Indisponível ou Escolha Inválida.");
-                    Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                     return false;
                 }
                 break;
             case 2:
-                if (superPotion > 0) {
+                if(superPotion > 0) {
                     superPotion--;
                     aliado.curar(CURA_SUPER_POTION);
                     System.out.println("\n>>> " + aliado.getNome() + " Usou uma Super Potion e Recuperou 35% da Vida!");
                     Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                 } else {
-                    System.out.println("Item Indisponível ou Escolha Inválida.");
-                    Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                     return false;
                 }
                 break;
-            case OPCAO_ANTIDOTO:
-                if (antidoto > 0) {
+            case 3:
+                if(antidoto > 0) {
                     antidoto--;
                     aliado.curarStatus();
                     System.out.println("\n>>> " + aliado.getNome() + " Usou um Antídoto e Curou os Status Negativos!");
                     Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                 } else {
-                    System.out.println("Item Indisponível ou Escolha Inválida.");
-                    Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                     return false;
                 }
                 break;
-            case OPCAO_SAL_SHARD:
-                if (salShard > 0) {
+            case 4:
+                if(salShard > 0) {
                     salShard--;
-                    arena.mudarTerreno();
+                    arena.mudarTerrenoSalShard(registro, gerador);
+                    registro.registrarUsoItem(treinador.getNome(), "Sal Shard");
                 } else {
-                    System.out.println("Item Indisponível ou Escolha Inválida.");
-                    Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                     return false;
                 }
                 break;
             case 0:
                 return false;
             default:
-                System.out.println("Item Indisponível ou Escolha Inválida.");
-                Batalha.pausar(Batalha.PAUSA_CURTA_MS);
                 return false;
         }
         usarItem();

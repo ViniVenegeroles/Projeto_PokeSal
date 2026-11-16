@@ -1,49 +1,24 @@
 package pokeucsal;
 
-/**
- * Tipo Fogo: forte contra Planta e fraco contra Água.
- */
+/** Tipo Fogo: vence Planta (x2.0) e perde para Água (x0.5). */
 public class TipoFogo implements TipoPoke {
-
-    private static final double VANTAGEM = 2.0;
-    private static final double DESVANTAGEM = 0.5;
-    private static final double NEUTRO = 1.0;
-
-    private static final int BONUS_ATK_BUFF = 10;
-    private static final int PENALIDADE_DEF_BUFF = 5;
-    private static final int PENALIDADE_DEF_DEBUFF = 5;
-
-    @Override
-    public String getNomeTipo() {
+    @Override public String getNomeTipo() {
         return "Fogo";
     }
-
-    @Override
-    public double calcMult(TipoPoke defensor) {
-        if (defensor.getNomeTipo().equals("Planta")) {
-            return VANTAGEM;
-        } else if (defensor.getNomeTipo().equals("Água")) {
-            return DESVANTAGEM;
+    @Override public double calcMult(TipoPoke d) {
+        return d.getNomeTipo().equals("Planta") ? 2.0 : d.getNomeTipo().equals("Água") ? 0.5 : 1.0;
+    }
+    @Override public void apBf(Pokesal u) {
+        u.setAtk(u.getAtk() + 10);
+        u.setDef(u.getDef() - 5);
+        if(!Batalha.modoTeste) {
+            System.out.println("Efeito Único (Fogo): O Ataque de " + u.getNome() + " subiu, mas a Defesa caiu!");
         }
-        return NEUTRO;
     }
-
-    @Override
-    public void apBf(final Pokemon usuario) {
-        usuario.setAtk(usuario.getAtk() + BONUS_ATK_BUFF);
-        usuario.setDef(usuario.getDef() - PENALIDADE_DEF_BUFF);
-        System.out.println("A Chama Cresce! O Ataque de " + usuario.getNome() + " Aumentou Para "
-            + usuario.getAtk() + " e a Defesa Diminuiu para " + usuario.getDef()
-            + " Devido ao Esforço Excessivo!");
-        Batalha.pausar(Batalha.PAUSA_CURTA_MS);
-    }
-
-    @Override
-    public void apDb(final Pokemon alvo) {
-        alvo.setDef(alvo.getDef() - PENALIDADE_DEF_DEBUFF);
-        System.out.println("O Inimigo está Super-Aquecido! A Defesa de " + alvo.getNome() + " "
-            + "diminuiu para "
-            + alvo.getDef() + " Devido ao Calor");
-        Batalha.pausar(Batalha.PAUSA_CURTA_MS);
+    @Override public void apDb(Pokesal a) {
+        a.setDef(a.getDef() - 5);
+        if(!Batalha.modoTeste) {
+            System.out.println("Efeito Único (Fogo): A Defesa de " + a.getNome() + " foi reduzida! (Def atual: " + a.getDef() + ")");
+        }
     }
 }
