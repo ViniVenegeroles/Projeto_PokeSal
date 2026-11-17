@@ -232,7 +232,15 @@ public class Batalha {
     }
 
     private Golpe golpeAleatorio(Pokemon p) {
-        return p.getGolpes()[sortearIndice(gerador, p.getGolpes().length)];
+        Golpe[] golpes = p.getGolpes();
+
+        if (golpes == null || golpes.length == 0) {
+            throw new IllegalStateException(
+                    "O Pokémon não possui golpes disponíveis."
+            );
+        }
+
+        return golpes[sortearIndice(gerador, golpes.length)];
     }
 
     private Golpe escolherAcao(Treinador t, Scanner sc, boolean automatico) {
